@@ -86,14 +86,7 @@ public class GankFragment extends BaseFragment<FragmentGankBinding> {
                             bindingView.vpGank.setCurrentItem(2);
                         }
                     }
-
-
-
-                }
-
-
-
-                );
+                });
         addSubscription(subscription);
     }
 }

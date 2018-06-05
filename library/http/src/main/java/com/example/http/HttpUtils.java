@@ -73,7 +73,7 @@ public class HttpUtils {
      */
     public static int per_page = 10;
     public static int per_page_more = 20;
-    private GsonConverterFactory factory = GsonConverterFactory.create(new GsonBuilder().create());
+
     public static HttpUtils getInstance() {
         if (instance == null) {
             synchronized (HttpUtils.class) {
@@ -105,7 +105,7 @@ public class HttpUtils {
 
     public Retrofit.Builder getBuilder(String apiUrl) {
         Retrofit.Builder builder = new Retrofit.Builder();
-        builder.client(getOkClient());//配置okhttpclient
+        builder.client(getOkClient());
         builder.baseUrl(apiUrl);//设置远程地址
         builder.addConverterFactory(new NullOnEmptyConverterFactory());
         builder.addConverterFactory(GsonConverterFactory.create(getGson()));
@@ -125,7 +125,7 @@ public class HttpUtils {
         return gson;
     }
 
-    //Gson自定义策略
+
     private static class AnnotateNaming implements FieldNamingStrategy {
         @Override
         public String translateName(Field field) {
@@ -168,14 +168,11 @@ public class HttpUtils {
             // 持久化cookie
             okBuilder.addInterceptor(new ReceivedCookiesInterceptor(context));
             okBuilder.addInterceptor(new AddCookiesInterceptor(context));
-
             // 添加缓存，无网访问时会拿缓存,只会缓存get请求
             okBuilder.addInterceptor(new AddCacheInterceptor(context));
             okBuilder.cache(cache);
-
-            okBuilder.addInterceptor(getInterceptor());//log拦截
+            okBuilder.addInterceptor(getInterceptor());
             okBuilder.sslSocketFactory(sslSocketFactory);
-
             okBuilder.hostnameVerifier(new HostnameVerifier() {
                 @SuppressLint("BadHostnameVerifier")
                 @Override
